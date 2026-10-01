@@ -49,3 +49,4 @@ print("Stock sekarang:", products[0]["stock"], "(negatif, tetap diterima)")
 # print(products[0]["nama"])   # KeyError: 'nama'
  
 # Masalah 3: perilaku (subtotal) terpisah dari datanya.
+
