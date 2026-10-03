@@ -1,19 +1,7 @@
-"""Simple Cashier Minggu 02 (Class, Object, Attribute, Method).
-
-Data produk yang di Minggu 01 masih berupa dictionary
-sekarang menjadi object dari class Product.
-"""
+"""Simple Cashier Minggu 03 (Encapsulation)."""
 
 from models.product import Product
 
-# Satu object Product, dibuat dari class-nya.
-product = Product("P001", "Indomie", 3000, 20)
-
-print("Produk pertama:", product.name)
-print("Subtotal 2 Indomie:", product.subtotal(2))
-print()
-
-# Banyak object, disimpan dalam List.
 products = [
     Product("P001", "Indomie", 3000, 20),
     Product("P002", "Teh Botol", 4000, 15),
@@ -30,22 +18,46 @@ for item in products:
 
 print()
 
-print("--- Minggu 01 vs Minggu 02 ---")
+indomie = products[0]
 
-# Minggu 01 dictionary.
-product_dict = {"code": "P001", "name": "Indomie", "price": 3000, "stock": 20}
-print("dictionary :", product_dict["name"], "subtotal", product_dict["price"] * 2)
-
-# Minggu 02 object. Rumus subtotal tidak lagi ditulis ulang di sini.
-print("object     :", product.name, "subtotal", product.subtotal(2))
+print("--- Masalah Minggu 02 ---")
+# Di Minggu 02 baris ini mengubah harga menjadi negatif tanpa perlawanan.
+# Sekarang price hanya bisa dibaca, tidak bisa ditulis.
+try:
+    indomie.price = -5000
+except AttributeError:
+    print("Menulis langsung ke price ditolak (property tanpa setter).")
 
 print()
-print("--- Catatan untuk Minggu 03 ---")
+print("--- Perubahan lewat method ---")
+indomie.change_price(3500)
+print("Harga baru:", indomie.price)
+indomie.reduce_stock(5)
+print("Stock setelah terjual 5:", indomie.stock)
 
-# Satu masalah Minggu 01 sudah selesai: perilaku kini menyatu dengan data.
-# Tetapi datanya masih belum terjaga.
-products[0].price = -5000
-products[0].stock = -100
-print("Harga sekarang:", products[0].price, "(negatif, masih diterima)")
-print("Stock sekarang:", products[0].stock, "(negatif, masih diterima)")
-print("Belum ada yang menjaga aturan ini -> encapsulation di Minggu 03.")
+print()
+print("--- Setiap aturan diuji ---")
+
+try:
+    indomie.change_price(-5000)
+except ValueError as error:
+    print("change_price(-5000) ->", error)
+
+try:
+    indomie.reduce_stock(0)
+except ValueError as error:
+    print("reduce_stock(0)     ->", error)
+
+try:
+    indomie.reduce_stock(-3)
+except ValueError as error:
+    print("reduce_stock(-3)    ->", error)
+
+try:
+    indomie.reduce_stock(999)
+except ValueError as error:
+    print("reduce_stock(999)   ->", error)
+
+print()
+print("Harga akhir:", indomie.price, "| Stock akhir:", indomie.stock)
+print("Percobaan yang gagal tidak mengubah apa pun.")
