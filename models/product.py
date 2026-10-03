@@ -36,3 +36,7 @@ class Product:
         if quantity > self._stock:
             raise ValueError("Insufficient stock")
         self._stock -= quantity
+
+    def get_description(self):
+        # Perilaku dasar. Subclass boleh menggantinya (override).
+        return self.name
