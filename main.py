@@ -1,52 +1,51 @@
-"""Simple Cashier — Minggu 01 (Foundation). 
-Data produk masih disimpan sebagai dictionary biasa. 
-Ini DISENGAJA: keterbatasannya akan terasa di Minggu 02, 
-dan itulah alasan kita butuh class. 
-""" 
-# Satu produk = satu dictionary. 
-product = { 
-    "code": "P001", 
-    "name": "Indomie", 
-    "price": 3000, 
-    "stock": 20, 
-} 
-print("Produk pertama:", product["name"]) 
-print() 
+"""Simple Cashier Minggu 02 (Class, Object, Attribute, Method).
 
-# Banyak produk = list berisi dictionary. 
-products = [ 
-    {"code": "P001", "name": "Indomie", "price": 3000, "stock": 20}, 
-    {"code": "P002", "name": "Teh Botol", "price": 4000, "stock": 15}, 
-    {"code": "P003", "name": "Roti", "price": 7000, "stock": 8}, 
-] 
+Data produk yang di Minggu 01 masih berupa dictionary
+sekarang menjadi object dari class Product.
+"""
 
-print("=========================") 
-print("     SIMPLE CASHIER") 
-print("=========================") 
-print() 
-print() 
+from models.product import Product
 
-for item in products: 
-    print(item["code"], item["name"], item["price"], item["stock"]) 
+# Satu object Product, dibuat dari class-nya.
+product = Product("P001", "Indomie", 3000, 20)
+
+print("Produk pertama:", product.name)
+print("Subtotal 2 Indomie:", product.subtotal(2))
+print()
+
+# Banyak object, disimpan dalam List.
+products = [
+    Product("P001", "Indomie", 3000, 20),
+    Product("P002", "Teh Botol", 4000, 15),
+    Product("P003", "Roti", 7000, 8),
+]
+
+print("=======================")
+print("    SIMPLE CASHIER     ")
+print("=======================")
+print()
+
+for item in products:
+    print(item.code, item.name, item.price, item.stock)
 
 print()
 
-# Menghitung subtotal masih dilakukan manual di setiap tempat. 
-quantity = 2 
-subtotal = products[0]["price"] * quantity 
-print("Subtotal", quantity, products[0]["name"], "=", subtotal) 
+print("--- Minggu 01 vs Minggu 02 ---")
 
-print() 
-print("--- Catatan untuk Minggu 02 ---") 
+# Minggu 01 dictionary.
+product_dict = {"code": "P001", "name": "Indomie", "price": 3000, "stock": 20}
+print("dictionary :", product_dict["name"], "subtotal", product_dict["price"] * 2)
 
-# Masalah 1: tidak ada yang mencegah data tidak masuk akal. 
-products[0]["price"] = -5000 
-products[0]["stock"] = -100 
-print("Harga sekarang:", products[0]["price"], "(negatif, tetap diterima)") 
-print("Stock sekarang:", products[0]["stock"], "(negatif, tetap diterima)")
+# Minggu 02 object. Rumus subtotal tidak lagi ditulis ulang di sini.
+print("object     :", product.name, "subtotal", product.subtotal(2))
 
-# Masalah 2: salah ketik nama key baru ketahuan saat program error. 
-# print(products[0]["nama"])   # KeyError: 'nama'
- 
-# Masalah 3: perilaku (subtotal) terpisah dari datanya.
+print()
+print("--- Catatan untuk Minggu 03 ---")
 
+# Satu masalah Minggu 01 sudah selesai: perilaku kini menyatu dengan data.
+# Tetapi datanya masih belum terjaga.
+products[0].price = -5000
+products[0].stock = -100
+print("Harga sekarang:", products[0].price, "(negatif, masih diterima)")
+print("Stock sekarang:", products[0].stock, "(negatif, masih diterima)")
+print("Belum ada yang menjaga aturan ini -> encapsulation di Minggu 03.")
