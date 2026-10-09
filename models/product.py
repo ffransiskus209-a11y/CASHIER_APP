@@ -1,7 +1,6 @@
-"""Model Product Minggu 03 (Encapsulation).
+"""Model Product Minggu 04 (Inheritance & Polymorphism).
 
-price dan stock tidak lagi dapat diubah langsung dari luar.
-Setiap perubahan harus lewat method yang menjaga aturannya.
+Menggabungkan Product dasar dengan class turunan FoodProduct dan DigitalProduct.
 """
 
 
@@ -40,3 +39,20 @@ class Product:
     def get_description(self):
         # Perilaku dasar. Subclass boleh menggantinya (override).
         return self.name
+
+
+class FoodProduct(Product):
+    def __init__(self, code, name, price, stock, expiry_date):
+        super().__init__(code, name, price, stock)
+        self.expiry_date = expiry_date
+
+    def get_description(self):
+        return f"{self.name} Expired: {self.expiry_date}"
+
+
+class DigitalProduct(Product):
+    def __init__(self, code, name, price, stock):
+        super().__init__(code, name, price, stock)
+
+    def get_description(self):
+        return f"{self.name} Digital Product"
